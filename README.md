@@ -40,3 +40,34 @@ One oddity for the picking approach in Deck is that it seems to always require
 a read per pick. In the common case where someone's cursor is moving over
 a stationary, non-animated map, it certainly seems like they could re-use
 an already-retrieved picking buffer.
+
+## Mapbox vs Deck.gl: data
+
+Mapbox, by default, simplifies and excludes data when it processes
+a geojson source in GL JS. The effect of this is extreme with large
+datasets composed of geographically tiny features. It renders quickly,
+but almost nothing is visible. So the way to get a fair comparison, and
+something useful, is to set tolerance to zero:
+
+```js
+map.addSource("points", {
+  type: "geojson",
+  data: geojson,
+  tolerance: 0,
+});
+```
+
+The experience of using Mapbox versus Deck with larger datasets is:
+
+Deck gets to the initial render much faster and its zoomed out views
+are darker than Mapbox's, like the gamma is higher on its antialiasing.
+After the initial render, there's a great deal of lag when you pan
+around a Deck-rendered map, and almost none navigating the Mapbox one.
+This is confirmed by Chrome devtools - Deck lags to 20fps dragging,
+Mapbox stays at 60fps.
+
+
+Zooming into the map in Mapbox will show simplified or quantized features that
+are then replaced with full-quality features. This doesn't happen
+with Deck - there's no simplification, so you never see
+simplified features.
