@@ -71,3 +71,18 @@ Zooming into the map in Mapbox will show simplified or quantized features that
 are then replaced with full-quality features. This doesn't happen
 with Deck - there's no simplification, so you never see
 simplified features.
+
+_Note for the reader: this is a surprising result. Mapbox is doing
+better with bigger data than I remembered. It's time to look closer._
+
+And as I write that note, the Mapbox tab crashes. So there are other
+issues with Mapbox that don't occur with Deck. In particular: Mapbox
+uses WebWorkers to get tiles, simplify them, etc. Those workers
+are shared between your custom GeoJSON layer and the map's own
+layers. When you load a big GeoJSON layer, it causes the map's
+own layers to load more slowly. There's one effect in particular,
+in which a basemap tile will fail to load if you've just
+been looking at a part of the map with lots of data and you zoom
+out ([screenshot](https://share.cleanshot.com/YfKb2D)). This is
+oddly persistent - it'll take seconds, sometimes, to see the tile
+load.
