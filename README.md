@@ -2,6 +2,16 @@
 
 Some light analysis and research for map frameworks.
 
+## Overview table
+
+| | Mapbox | Deck |
+| -- | -- | -- |
+| Finding features on the map | queryRenderedFeatures | pickObject(s) |
+| Data-driven styles | JSON style documents (Mapbox Style Spec) | imperative JavaScript functions (getRadius, etc) |
+| Rendering strategy | Tiled (even for GeoJSON) | Untiled by default |
+| Governance | Source-available proprietary Mapbox | Open governance under Linux foundation, main contributors Unfolded & Carto |
+| Interface for updating layers and styles | Mostly imperative (addLayers) | Mostly declarative / reactive (diffing layers) |
+
 ## Mapbox vs Deck.gl: "picking"
 
 See the `picking/` directory. The main takeaway there is that
