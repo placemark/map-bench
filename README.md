@@ -41,6 +41,20 @@ a read per pick. In the common case where someone's cursor is moving over
 a stationary, non-animated map, it certainly seems like they could re-use
 an already-retrieved picking buffer.
 
+---
+
+Via a helpful discussion thread on Deck.gl's side: https://github.com/visgl/deck.gl/discussions/7361
+It's expected to use `onHover` events rather than call `pickObjects` from mousemove events.
+This cuts down significantly on the number of picking invocations total, and does them
+at a lower frequency than mousemoves, and the pickObjects call is running all the time
+to power `onHover` anyway, so if you aren't using it, you're wasting time.
+
+Also, the contention is that it's faster to write the data for `pickObjects` than it
+is to recreate a grid index, and that the picking data may be more accurate.
+
+This is probably enough to make `pickObjects` viable for my usecase. I think it remains
+that `pickObjects` is slower at _querying_ than `queryRenderedFeatures`.
+
 ## Mapbox vs Deck.gl: data
 
 Mapbox, by default, simplifies and excludes data when it processes
