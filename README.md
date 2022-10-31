@@ -11,6 +11,7 @@ Some light analysis and research for map frameworks.
 | Rendering strategy | Tiled (even for GeoJSON) | Untiled by default |
 | Governance | Source-available proprietary Mapbox | Open governance under Linux foundation, main contributors Unfolded & Carto |
 | Interface for updating layers and styles | Mostly imperative (addLayers) | Mostly declarative / reactive (diffing layers) |
+| Overlay dimensions | Width of lines etc is in pixels, don’t scale with zoom unless you write an expression. | Widths and radiuses are by default in meters, can be set to pixels |
 
 ## Mapbox vs Deck.gl: "picking"
 
